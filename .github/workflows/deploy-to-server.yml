@@ -35,7 +35,7 @@ jobs:
           remote_host: ${{ secrets.DEPLOY_HOST }}
           remote_port: ${{ secrets.DEPLOY_PORT }}
           remote_user: ${{ secrets.DEPLOY_USER }}
-          local_dir: "./.next/"
+          local_dir: "./"
           remote_dir: "/var/www/jasonche-ca"
         run: |
           npm install
