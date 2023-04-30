@@ -194,7 +194,7 @@ export default function NavMenu() {
                 <Image src={navIcon} alt="Navigation" className="w-10 h-10" />
             </div>
             <div ref={menuRef} onTransitionEnd={handleTransitionEnd} className="z-20 lg:z-0 fixed h-full transition-all duration-500 -translate-x-full w-full hidden lg:block lg:relative lg:transition-none lg:duration-0 lg:translate-x-0 lg:w-auto lg:col-span-3 2xl:col-span-2 bg-zinc-900 border border-zinc-50/20">
-                <div className="lg:sticky lg:top-0 lg:left-0 lg:h-screen lg:overflow-scroll py-4 px-4">
+                <div className="lg:sticky lg:top-0 lg:left-0 lg:h-screen lg:overflow-auto py-4 px-4">
                     <div className="flex gap-2 items-center">
                         <Image src={navIcon} alt="Navigation" className="w-10 h-10" />
                         <span>NAVIGATION</span>

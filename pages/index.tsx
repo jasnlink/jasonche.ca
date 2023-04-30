@@ -15,7 +15,7 @@ export default function Home() {
             </Head>
             <div className="h-full flex items-center justify-center">
                 <div className="mx-auto max-w-md bg-zinc-900 p-8 lg:p-12 rounded-sm">
-                    <Image src="/jason-che.jpg" alt="Jason Che" height={100} width={100} className="rounded-full" />
+                    <Image src="/jason-che.jpg" alt="Jason Che" height={100} width={100} unoptimized className="rounded-full" />
                     <div className="mt-6 font-medium text-4xl">Jason Che</div>
                     <div className="mt-6">I am a <span className="font-extrabold">full stack web software developer</span> with enterprise network infrastructure knowledge. I specialize in <span className="font-extrabold">Javascript and React</span>.</div>
                     <div className="mt-6">My focus is on product vision, connecting frontend with backend technologies, and UI/UX design.</div>
