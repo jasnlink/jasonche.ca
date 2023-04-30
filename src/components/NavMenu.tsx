@@ -168,58 +168,60 @@ export default function NavMenu() {
 
     return (
         <>
-            <div role="button" className="z-10 flex items-center gap-2 fixed top-0 left-0 w-screen h-14 px-4 bg-zinc-700 hover lg:hidden" onClick={() => setMenuOpen(true)}>
+            <div role="button" className="z-10 flex items-center gap-2 fixed top-0 left-0 w-screen h-14 px-4 bg-zinc-900 border border-zinc-50/20 lg:hidden" onClick={() => setMenuOpen(true)}>
                 <Image src={navIcon} alt="Navigation" className="w-10 h-10" />
             </div>
-            <div ref={menuRef} onTransitionEnd={handleTransitionEnd} className="z-20 lg:z-0 fixed h-full transition-all duration-500 -translate-x-full w-full hidden lg:block lg:transition-none lg:duration-0 lg:translate-x-0 lg:w-auto lg:static lg:col-span-3 2xl:col-span-2 bg-zinc-900 border border-zinc-50/30 py-4 px-4 overflow-auto">
+            <div ref={menuRef} onTransitionEnd={handleTransitionEnd} className="z-20 lg:z-0 fixed h-full transition-all duration-500 -translate-x-full w-full hidden lg:block lg:relative lg:transition-none lg:duration-0 lg:translate-x-0 lg:w-auto lg:col-span-3 2xl:col-span-2 bg-zinc-900 border border-zinc-50/20 py-4 px-4">
+                <div className="sticky top-4 left-0">
+                    <div className="flex gap-2 items-center">
+                        <Image src={navIcon} alt="Navigation" className="w-10 h-10" />
+                        <span>NAVIGATION</span>
+                    </div>
+                    <div className="mt-4">
+                        {navItems.map((navItem, navItemIndex, array) => (
+                            <Fragment key={navItemIndex}>
+                                <MenuItem 
+                                    href={navItem.path}
+                                    onClick={(e) => handleSelect(e, [navItemIndex, null])}
+                                    selected={selectedItem[0] === navItemIndex}
+                                >
+                                    {navItem.title}
+                                </MenuItem>
+                                <div className={selectedItem[0] === navItemIndex ? "transition-all border-l border-l-zinc-50" : "transition-all border-l border-l-transparent"}>
+                                    {navItem.subItems.map((subItem, subItemIndex, array) => (
+                                        <MenuItem
+                                            href={subItem.path}
+                                            key={subItemIndex}
+                                            sub={true}
+                                            onClick={(e) => handleSelect(e, [navItemIndex, subItemIndex])}
+                                            selected={selectedItem[1] === subItemIndex}
+                                        >
+                                            {subItem.title}
+                                        </MenuItem>
+                                    ))}
+                                </div>
+                            </Fragment>
+                        ))}
+                    </div>
+                    <div className="mt-4 select-none">Connect with me</div>
+                    <div>
+                        {socialLinks.map((socialLink, socialLinkIndex, array) => (
+                            <MenuItem 
+                                href={socialLink.url}
+                                key={socialLinkIndex}
+                                target="_blank"
+                            >
+                                <div className="flex items-center gap-2">
+                                    <Image src={socialLink.icon} alt={socialLink.title} className="w-5 h-5" />
+                                    <span className="font-medium">{socialLink.title}</span>
+                                    <Image src={linkIcon} alt={socialLink.title} className="w-4 h-4" />
+                                </div>
+                            </MenuItem>
+                        ))}
+                    </div>
+                </div>
                 <div role="button" className="flex items-center justify-center gap-2 absolute top-0 right-0 mr-4 mt-5 h-8 w-8 bg-white rounded-full lg:hidden" onClick={() => setMenuOpen(false)}>
                     <Image src={closeIcon} alt="Navigation" className="w-3 h-3" />
-                </div>
-                <div className="flex gap-2 items-center">
-                    <Image src={navIcon} alt="Navigation" className="w-10 h-10" />
-                    <span>NAVIGATION</span>
-                </div>
-                <div className="mt-4">
-                    {navItems.map((navItem, navItemIndex, array) => (
-                        <Fragment key={navItemIndex}>
-                            <MenuItem 
-                                href={navItem.path}
-                                onClick={(e) => handleSelect(e, [navItemIndex, null])}
-                                selected={selectedItem[0] === navItemIndex}
-                            >
-                                {navItem.title}
-                            </MenuItem>
-                            <div className={selectedItem[0] === navItemIndex ? "transition-all border-l border-l-zinc-50" : "transition-all border-l border-l-transparent"}>
-                                {navItem.subItems.map((subItem, subItemIndex, array) => (
-                                    <MenuItem
-                                        href={subItem.path}
-                                        key={subItemIndex}
-                                        sub={true}
-                                        onClick={(e) => handleSelect(e, [navItemIndex, subItemIndex])}
-                                        selected={selectedItem[1] === subItemIndex}
-                                    >
-                                        {subItem.title}
-                                    </MenuItem>
-                                ))}
-                            </div>
-                        </Fragment>
-                    ))}
-                </div>
-                <div className="mt-4 select-none">Connect with me</div>
-                <div>
-                    {socialLinks.map((socialLink, socialLinkIndex, array) => (
-                        <MenuItem 
-                            href={socialLink.url}
-                            key={socialLinkIndex}
-                            target="_blank"
-                        >
-                            <div className="flex items-center gap-2">
-                                <Image src={socialLink.icon} alt={socialLink.title} className="w-5 h-5" />
-                                <span className="font-medium">{socialLink.title}</span>
-                                <Image src={linkIcon} alt={socialLink.title} className="w-4 h-4" />
-                            </div>
-                        </MenuItem>
-                    ))}
                 </div>
             </div>
         </>

@@ -1,4 +1,4 @@
-import { PropsWithChildren, useRef, MouseEvent } from "react";
+import { PropsWithChildren, useRef, MouseEvent, useEffect } from "react";
 
 interface FadeProps {
     fade:boolean;
@@ -9,24 +9,28 @@ export default function Fade({ fade, onClose, children }:PropsWithChildren<FadeP
 
     const divRef = useRef<HTMLDivElement>(null)
 
-    let className:string = 'absolute top-0 left-0 h-screen w-screen z-10 bg-black/70 transition-all duration-300 hidden opacity-0'
+    let className:string = 'fixed top-0 left-0 h-full w-full z-10 bg-black/70 transition-all duration-300 hidden opacity-0'
 
-    if(fade && divRef.current) {
-        divRef.current.classList.remove('hidden')
-        setTimeout(() => {
-            if(fade && divRef.current) {
-                divRef.current.classList.remove('opacity-0')
-                divRef.current.classList.add('opacity-100')
-            }
-        }, 10)
-    } else if(!fade && divRef.current) {
-        divRef.current.classList.remove('opacity-100')
-        setTimeout(() => {
-            if(!fade && divRef.current) {
-                divRef.current.classList.add('opacity-0')
-            }
-        }, 10)
-    }
+    useEffect(() => {
+
+        if(fade && divRef.current) {
+            divRef.current.classList.remove('hidden')
+            setTimeout(() => {
+                if(fade && divRef.current) {
+                    divRef.current.classList.remove('opacity-0')
+                    divRef.current.classList.add('opacity-100')
+                }
+            }, 10)
+        } else if(!fade && divRef.current) {
+            divRef.current.classList.remove('opacity-100')
+            setTimeout(() => {
+                if(!fade && divRef.current) {
+                    divRef.current.classList.add('opacity-0')
+                }
+            }, 10)
+        }
+    }, [fade])
+
 
     function handleTransitionEnd() {
         if(!fade && divRef.current) {
