@@ -548,7 +548,7 @@ export default function Page() {
         return (
             <>
                 <Head>
-                    <title>Jason Che - Full Stack Web Software Developer</title>
+                    <title>Jason Che - Full Stack Web Software Developer - {pageContent.title}</title>
                     <meta property="og:title" content="Jason Che - Full Stack Web Software Developer" key="title" />
                 </Head>
                 {pageContent.contentBlocks.map((content, index, array) => {
