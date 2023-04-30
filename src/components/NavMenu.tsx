@@ -52,6 +52,28 @@ export default function NavMenu() {
         subItems: Array<NavItem>;
     }
 
+    useEffect(() => {
+
+        function handleRouteChangeComplete() {
+            let mainContentContainer = document.querySelector('#main-content-container')
+            if(mainContentContainer) {
+                mainContentContainer.scroll({
+                    top: 0,
+                    left: 0,
+                    behavior: 'smooth'
+                });
+            }
+            setMenuOpen(false)
+        }
+
+        router.events.on('routeChangeComplete', handleRouteChangeComplete);
+
+        return(() => {
+            router.events.off('routeChangeComplete', handleRouteChangeComplete)
+        })
+    }, [router])
+
+
     const navItems:Array<NavItem> = [
         {
             title: 'Home',
@@ -133,15 +155,15 @@ export default function NavMenu() {
         },
     ];
 
+    const [menuOpen, setMenuOpen] = useState<boolean>(false)
+    const menuRef = useRef<HTMLDivElement | null>(null)
+
     function handleSelect(e: MouseEvent, sId:Array<number | null>):void {
         if(JSON.stringify(sId) !== JSON.stringify(selectedItem)) {
             setSelectedItem([...sId])
         }
         setMenuOpen(false)
     }
-
-    const [menuOpen, setMenuOpen] = useState<boolean>(false)
-    const menuRef = useRef<HTMLDivElement | null>(null)
 
     useEffect(() => {
 

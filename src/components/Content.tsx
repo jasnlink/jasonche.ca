@@ -1,29 +1,6 @@
-import { useRouter } from "next/router";
-import { PropsWithChildren, useEffect } from "react";
+import { PropsWithChildren } from "react";
 
 export default function Content({ children }: PropsWithChildren) {
-
-    const router = useRouter()
-
-    useEffect(() => {
-
-        function handleRouteChangeComplete() {
-            let mainContentContainer = document.querySelector('#main-content-container')
-            if(mainContentContainer) {
-                mainContentContainer.scroll({
-                    top: 0,
-                    left: 0,
-                    behavior: 'smooth'
-                });
-            }
-        }
-
-        router.events.on('routeChangeComplete', handleRouteChangeComplete);
-
-        return(() => {
-            router.events.off('routeChangeComplete', handleRouteChangeComplete)
-        })
-    }, [router])
 
     return (
 
