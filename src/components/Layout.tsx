@@ -1,6 +1,4 @@
 import { PropsWithChildren } from "react";
-import Image from "next/image";
-import navIcon from '../../public/icon-nav.svg'
 
 export default function Layout({ children }:PropsWithChildren) {
 

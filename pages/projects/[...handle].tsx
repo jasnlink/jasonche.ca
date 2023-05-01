@@ -4,7 +4,6 @@ import { useEffect, useState, Fragment } from "react";
 import Text from "@/src/components/Text";
 import List from "@/src/components/List";
 import LightboxImage from "@/src/components/LightboxImage";
-import { JsxElement } from "typescript";
 
 export default function Page() {
     const router = useRouter();

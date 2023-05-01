@@ -1,5 +1,4 @@
 import MenuItem from '@/src/components/MenuItem'
-import { get } from 'https';
 import { useRouter } from 'next/router';
 import { Fragment, useState, MouseEvent, useEffect, useRef } from 'react'
 import Image from 'next/image';

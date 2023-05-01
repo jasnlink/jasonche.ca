@@ -19,8 +19,8 @@ export default function Home() {
                     <div className="mt-6 font-medium text-4xl">Jason Che</div>
                     <div className="mt-6">I am a <span className="font-extrabold">full stack web software developer</span> with enterprise network infrastructure knowledge. I specialize in <span className="font-extrabold">Javascript and React</span>.</div>
                     <div className="mt-6">My focus is on product vision, connecting frontend with backend technologies, and UI/UX design.</div>
-                    <div className="mt-6">Frontend: 11 years</div>
-                    <div className="mt-4">Full Stack: 10 years</div>
+                    <div className="mt-6">Frontend: 10 years</div>
+                    <div className="mt-4">Full Stack: 9 years</div>
                     <Link className="mt-8 text-black bg-zinc-50 font-medium rounded-sm py-2 px-4 text-center select-none block border border-transparent transition-all hover:bg-transparent hover:text-zinc-50 hover:border-zinc-50" href="/Jason-Che_CV-en.pdf" target="_blank">See my resume</Link>
                 </div>
             </div>
