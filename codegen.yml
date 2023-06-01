@@ -1,0 +1,8 @@
+schema: https://q8h9ggfv.api.sanity.io/v1/graphql/production/default
+documents: './src/**/*.graphql'
+generates:
+  ./src/generated/graphql.ts:
+    plugins:
+      - typescript
+      - typescript-operations
+      - typescript-graphql-request

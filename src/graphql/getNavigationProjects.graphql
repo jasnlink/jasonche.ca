@@ -1,0 +1,10 @@
+query getNavigationProjects {
+    allProjects (
+        sort: {
+            orderRank: ASC
+        }
+    ) {
+        title
+        handle
+    }
+}

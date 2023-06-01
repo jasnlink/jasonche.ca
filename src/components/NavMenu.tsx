@@ -1,3 +1,16 @@
+import { dehydrate } from 'react-query'
+import { queryClient } from '@/src/api'
+
+export async function getServerSideProps() {
+    await queryClient.prefetchQuery(['navigationProjects'], () => getNavigationProjects())
+
+    return {
+        props: {
+            dehydratedState: dehydrate(queryClient)
+        }
+    }
+}
+
 import MenuItem from '@/src/components/MenuItem'
 import { useRouter } from 'next/router';
 import { Fragment, useState, MouseEvent, useEffect, useRef } from 'react'
@@ -9,11 +22,18 @@ import linkIcon from '../../public/icon-link.svg'
 import navIcon from '../../public/icon-nav.svg'
 import closeIcon from '../../public/icon-close.svg'
 import emailIcon from '../../public/icon-email.svg'
+import { useQuery } from 'react-query';
+import { getNavigationProjects } from '../api';
 
 export default function NavMenu() {
 
+
+    const [loading, setLoading] = useState<boolean>(true)
     const router = useRouter()
-    const handle = router.query.handle
+    let handle = ''
+    if(router.query.handle) {
+        handle = router.query.handle[0];
+    }
     const path = router.asPath
 
     const [selectedItem, setSelectedItem] = useState<Array<number | null>>([0, null])
@@ -21,11 +41,11 @@ export default function NavMenu() {
     function getMatchingHandleId(searchHandle:string, itemList:Array<NavItem>):number | null {
         for(let i = 0; i < itemList.length; i++) {
             const item = itemList[i]
-
+            
             if(item.handle === searchHandle) {
                 return i
             }
-            if(item.subItems.length) {
+            if(item?.subItems?.length) {
                 return getMatchingHandleId(searchHandle, item.subItems)
             }
         }
@@ -34,21 +54,21 @@ export default function NavMenu() {
     useEffect(() => {
         if(handle) {
             if(path.includes('/projects/')) {
-                let selectedHandleId = [getMatchingHandleId('/projects/', navItems), getMatchingHandleId(handle[0], navItems)]
+                let selectedHandleId = [getMatchingHandleId('/projects/', navItems), getMatchingHandleId(handle, navItems)]
                 setSelectedItem([...selectedHandleId])
             }
         } else {
             let selectedHandleId = [0, null]
             setSelectedItem([...selectedHandleId])
         }
-    }, [handle])
+    }, [loading])
 
 
     interface NavItem {
-        title: string;
-        path: string | undefined;
-        handle: string | undefined;
-        subItems: Array<NavItem>;
+        title: string | undefined | null;
+        path: string | undefined | null;
+        handle: string | undefined | null;
+        subItems: Array<NavItem> | undefined | null;
     }
 
     useEffect(() => {
@@ -72,58 +92,43 @@ export default function NavMenu() {
         })
     }, [router])
 
+    const [navItems, setNavItems] = useState<Array<NavItem>>([])
 
-    const navItems:Array<NavItem> = [
-        {
-            title: 'Home',
-            path: '/',
-            handle: '/',
-            subItems: []
-        },
-        {
-            title: 'Projects',
-            path: '/',
-            handle: '/projects/',
-            subItems: [
-                {
-                    title: 'RES Simple Booking - Online Appointment Sofware',
-                    path: '/projects/res-simple-booking-online-appointment-software',
-                    handle: 'res-simple-booking-online-appointment-software',
+    const {data} = useQuery(['navigationProjects'], () => getNavigationProjects())
+    const navigationProjectsData = data?.allProjects
+
+    useEffect(() => {
+        let navigationProjectsLinks:Array<NavItem> = []
+        if(navigationProjectsData?.length) {
+            for(let navigationProject of navigationProjectsData) {
+                navigationProjectsLinks.push({
+                    title: navigationProject.title,
+                    path: `/projects/${navigationProject.handle}`,
+                    handle: navigationProject.handle,
                     subItems: []
-                },
-                {
-                    title: 'realPOS - Desktop POS Software',
-                    path: '/projects/realpos-desktop-pos-software',
-                    handle: 'realpos-desktop-pos-software',
-                    subItems: []
-                },
-                {
-                    title: 'MealPortal - Online Pickup and Delivery Ordering Software',
-                    path: '/projects/mealportal-online-pickup-delivery-ordering-software',
-                    handle: 'mealportal-online-pickup-delivery-ordering-software',
-                    subItems: []
-                },
-                {
-                    title: 'AYCEHub - Tableside Scan to Order System',
-                    path: '/projects/aycehub-tableside-scan-to-order-system',
-                    handle: 'aycehub-tableside-scan-to-order-system',
-                    subItems: []
-                },
-                {
-                    title: 'SimpleMenu - Interactive Pickup Order Management Software',
-                    path: '/projects/simplemenu-interactive-ordering-pickup-management-software',
-                    handle: 'simplemenu-interactive-ordering-pickup-management-software',
-                    subItems: []
-                },
-                {
-                    title: 'PrimeElo - Rank Boosting Service for League of Legends',
-                    path: '/projects/primeelo-rank-boosting-service-for-league-of-legends',
-                    handle: 'primeelo-rank-boosting-service-for-league-of-legends',
-                    subItems: []
-                },
-            ]
-        },
-    ];
+                })
+            }
+
+            setNavItems(
+                [
+                    {
+                        title: 'Home',
+                        path: '/',
+                        handle: '/',
+                        subItems: []
+                    },
+                    {
+                        title: 'Projects',
+                        path: '/',
+                        handle: '/projects/',
+                        subItems: navigationProjectsLinks
+                    },
+                ]
+            )
+            setLoading(false)
+        }
+    }, [navigationProjectsData])
+
 
     interface SocialLink {
         icon: any;
@@ -202,16 +207,16 @@ export default function NavMenu() {
                         {navItems.map((navItem, navItemIndex, array) => (
                             <Fragment key={navItemIndex}>
                                 <MenuItem 
-                                    href={navItem.path}
+                                    href={navItem.path || ''}
                                     onClick={(e) => handleSelect(e, [navItemIndex, null])}
                                     selected={selectedItem[0] === navItemIndex}
                                 >
                                     {navItem.title}
                                 </MenuItem>
                                 <div className={selectedItem[0] === navItemIndex ? "transition-all border-l border-l-zinc-50" : "transition-all border-l border-l-transparent"}>
-                                    {navItem.subItems.map((subItem, subItemIndex, array) => (
+                                    {navItem?.subItems?.map((subItem, subItemIndex, array) => (
                                         <MenuItem
-                                            href={subItem.path}
+                                            href={subItem.path || ''}
                                             key={subItemIndex}
                                             sub={true}
                                             onClick={(e) => handleSelect(e, [navItemIndex, subItemIndex])}

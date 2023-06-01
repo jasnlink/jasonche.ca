@@ -1,0 +1,13 @@
+query getProjectByHandle($searchHandle:String!) {
+    allProjects(
+        where: {
+            handle: {
+                eq: $searchHandle
+            }
+        }
+    ) {
+        title
+        handle
+        contentRaw
+    }
+}

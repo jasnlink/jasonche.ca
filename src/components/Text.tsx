@@ -1,18 +1,25 @@
 import { PropsWithChildren } from "react";
+import useMarginClass from "../hooks/useMarginClass";
 
 interface TextProps {
     variant:string;
+    my?:number;
+    mt?:number;
+    mb?:number;
 }
 
-export default function Text({ variant, children }:PropsWithChildren<TextProps>) {
+export default function Text({ variant, my=0, mt=0, mb=0, children }:PropsWithChildren<TextProps>) {
+
+    const marginClass = useMarginClass({my, mt, mb})
+
     switch (variant) {
         case 'title': 
-            return <h1 className="font-extrabold text-4xl my-12">{children}</h1>
+            return <h1 className={`${marginClass}font-extrabold text-4xl`}>{children}</h1>
         case 'subheading':
-            return <h2 className="font-bold text-3xl mt-8 mb-4">{children}</h2>
+            return <h2 className={`${marginClass}font-bold text-3xl`}>{children}</h2>
         case 'paragraph':
-            return <div className="font-base text-base my-4">{children}</div>
+            return <div className={`${marginClass}font-base text-base`}>{children}</div>
         default:
-            return <div>{children}</div>
+            return <div className={`${marginClass}`}>{children}</div>
     }
 }

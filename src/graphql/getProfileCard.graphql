@@ -1,0 +1,22 @@
+query getProfileCard {
+    allProfileCard{
+        profileImage {
+            alt
+            asset {
+                url
+            }
+        }
+        fullName
+        bioRaw
+        highlightedSkills {
+            skill
+            years
+        }
+        resume {
+            description
+            asset {
+                url
+            }
+        }
+    }
+}
