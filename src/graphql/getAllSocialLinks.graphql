@@ -4,6 +4,7 @@ query getAllSocialLinks {
             orderRank: ASC
         }
     ) {
+        _id
         _key
         title
         url

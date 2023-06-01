@@ -1063,12 +1063,12 @@ export type GetAllProjectsQuery = { __typename?: 'RootQuery', allProjects: Array
 export type GetAllSocialLinksQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetAllSocialLinksQuery = { __typename?: 'RootQuery', allSocialLinks: Array<{ __typename?: 'SocialLinks', _key?: string | null, title?: string | null, url?: string | null, socialIcon?: { __typename?: 'Image', _key?: string | null, _type?: string | null, asset?: { __typename?: 'SanityImageAsset', altText?: string | null, url?: string | null } | null } | null }> };
+export type GetAllSocialLinksQuery = { __typename?: 'RootQuery', allSocialLinks: Array<{ __typename?: 'SocialLinks', _id?: string | null, _key?: string | null, title?: string | null, url?: string | null, socialIcon?: { __typename?: 'Image', _key?: string | null, _type?: string | null, asset?: { __typename?: 'SanityImageAsset', altText?: string | null, url?: string | null } | null } | null }> };
 
 export type GetNavigationProjectsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetNavigationProjectsQuery = { __typename?: 'RootQuery', allProjects: Array<{ __typename?: 'Projects', title?: string | null, handle?: string | null }> };
+export type GetNavigationProjectsQuery = { __typename?: 'RootQuery', allProjects: Array<{ __typename?: 'Projects', _id?: string | null, _key?: string | null, title?: string | null, handle?: string | null }> };
 
 export type GetProfileCardQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -1095,6 +1095,7 @@ export const GetAllProjectsDocument = gql`
 export const GetAllSocialLinksDocument = gql`
     query getAllSocialLinks {
   allSocialLinks(sort: {orderRank: ASC}) {
+    _id
     _key
     title
     url
@@ -1112,6 +1113,8 @@ export const GetAllSocialLinksDocument = gql`
 export const GetNavigationProjectsDocument = gql`
     query getNavigationProjects {
   allProjects(sort: {orderRank: ASC}) {
+    _id
+    _key
     title
     handle
   }

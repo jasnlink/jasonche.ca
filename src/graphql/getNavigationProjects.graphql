@@ -4,6 +4,8 @@ query getNavigationProjects {
             orderRank: ASC
         }
     ) {
+        _id
+        _key
         title
         handle
     }

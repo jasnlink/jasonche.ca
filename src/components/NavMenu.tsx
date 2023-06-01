@@ -67,6 +67,7 @@ export default function NavMenu() {
 
 
     interface NavItem {
+        _key: string | undefined | null;
         title: string | undefined | null;
         path: string | undefined | null;
         handle: string | undefined | null;
@@ -105,6 +106,7 @@ export default function NavMenu() {
         if(navigationProjectsData?.length && socialLinksData?.length) {
             for(let navigationProject of navigationProjectsData) {
                 navigationProjectsLinks.push({
+                    _key: navigationProject._id,
                     title: navigationProject.title,
                     path: `/projects/${navigationProject.handle}`,
                     handle: navigationProject.handle,
@@ -115,12 +117,14 @@ export default function NavMenu() {
             setNavItems(
                 [
                     {
+                        _key: '0',
                         title: 'Home',
                         path: '/',
                         handle: '/',
                         subItems: []
                     },
                     {
+                        _key: '1',
                         title: 'Projects',
                         path: '/',
                         handle: '/projects/',
@@ -183,8 +187,8 @@ export default function NavMenu() {
                                 <span>NAVIGATION</span>
                             </div>
                             <div className="mt-4">
-                                {navItems.map((navItem, navItemIndex, array) => (
-                                    <Fragment key={navItemIndex}>
+                                {navItems.map((navItem, navItemIndex) => (
+                                    <Fragment key={navItem._key}>
                                         <MenuItem 
                                             href={navItem.path || ''}
                                             onClick={(e) => handleSelect(e, [navItemIndex, null])}
@@ -196,7 +200,7 @@ export default function NavMenu() {
                                             {navItem?.subItems?.map((subItem, subItemIndex, array) => (
                                                 <MenuItem
                                                     href={subItem.path || ''}
-                                                    key={subItemIndex}
+                                                    key={subItem._key}
                                                     sub={true}
                                                     onClick={(e) => handleSelect(e, [navItemIndex, subItemIndex])}
                                                     selected={selectedItem[1] === subItemIndex}
@@ -213,7 +217,7 @@ export default function NavMenu() {
                                 {socialLinkItems.map((linkItem) => (
                                     <MenuItem 
                                         href={linkItem.url || ''}
-                                        key={linkItem._key}
+                                        key={linkItem._id}
                                         target="_blank"
                                     >
                                         <div className="flex items-center gap-2">
