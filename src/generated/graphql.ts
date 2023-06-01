@@ -658,6 +658,7 @@ export type SanityImageAsset = Document & {
   /** Document ID */
   _id?: Maybe<Scalars['ID']['output']>;
   _key?: Maybe<Scalars['String']['output']>;
+  _ref?: Maybe<Scalars['String']['output']>;
   /** Current document revision */
   _rev?: Maybe<Scalars['String']['output']>;
   /** Document type */
