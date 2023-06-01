@@ -1,5 +1,4 @@
 import { Hydrate, QueryClientProvider } from 'react-query'
-
 import { queryClient } from '@/src/api'
 
 import '@/styles/globals.css'
@@ -8,7 +7,11 @@ import Layout from '@/src/components/Layout'
 import NavMenu from '@/src/components/NavMenu'
 import Content from '@/src/components/Content'
 
+import Script from 'next/script'
+
 export default function App({ Component, pageProps }: AppProps) {
+
+    const isProduction = process.env.NODE_ENV === "production";
 
     return (
         <QueryClientProvider client={queryClient}>
@@ -16,6 +19,19 @@ export default function App({ Component, pageProps }: AppProps) {
                 <Layout>
                     <NavMenu />
                     <Content>
+                        {!!isProduction && (
+                            <>
+                                <Script src="https://www.googletagmanager.com/gtag/js?id=G-YLMZM6JBQX" strategy="afterInteractive" />
+                                <Script id="google-analytics" strategy="afterInteractive">
+                                    {`
+                                        window.dataLayer = window.dataLayer || [];
+                                        function gtag(){dataLayer.push(arguments);}
+                                        gtag('js', new Date());
+                                        gtag('config', 'G-YLMZM6JBQX');
+                                    `}
+                                </Script>
+                            </>
+                        )}
                         <Component {...pageProps} />
                     </Content>
                 </Layout>
