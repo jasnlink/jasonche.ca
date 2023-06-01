@@ -1,0 +1,19 @@
+query getAllSocialLinks {
+    allSocialLinks(
+        sort: {
+            orderRank: ASC
+        }
+    ) {
+        _key
+        title
+        url
+        socialIcon {
+            _key
+            _type
+            asset {
+                altText
+                url
+            }
+        }
+    }
+}

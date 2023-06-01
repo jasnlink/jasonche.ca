@@ -448,12 +448,14 @@ export type RootQuery = {
   Projects?: Maybe<Projects>;
   SanityFileAsset?: Maybe<SanityFileAsset>;
   SanityImageAsset?: Maybe<SanityImageAsset>;
+  SocialLinks?: Maybe<SocialLinks>;
   allDocument: Array<Document>;
   allMediaTag: Array<MediaTag>;
   allProfileCard: Array<ProfileCard>;
   allProjects: Array<Projects>;
   allSanityFileAsset: Array<SanityFileAsset>;
   allSanityImageAsset: Array<SanityImageAsset>;
+  allSocialLinks: Array<SocialLinks>;
 };
 
 
@@ -483,6 +485,11 @@ export type RootQuerySanityFileAssetArgs = {
 
 
 export type RootQuerySanityImageAssetArgs = {
+  id: Scalars['ID']['input'];
+};
+
+
+export type RootQuerySocialLinksArgs = {
   id: Scalars['ID']['input'];
 };
 
@@ -532,6 +539,14 @@ export type RootQueryAllSanityImageAssetArgs = {
   offset?: InputMaybe<Scalars['Int']['input']>;
   sort?: InputMaybe<Array<SanityImageAssetSorting>>;
   where?: InputMaybe<SanityImageAssetFilter>;
+};
+
+
+export type RootQueryAllSocialLinksArgs = {
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  sort?: InputMaybe<Array<SocialLinksSorting>>;
+  where?: InputMaybe<SocialLinksFilter>;
 };
 
 export type SanityAssetSourceData = {
@@ -950,6 +965,53 @@ export type SlugSorting = {
   source?: InputMaybe<SortOrder>;
 };
 
+export type SocialLinks = Document & {
+  __typename?: 'SocialLinks';
+  /** Date the document was created */
+  _createdAt?: Maybe<Scalars['DateTime']['output']>;
+  /** Document ID */
+  _id?: Maybe<Scalars['ID']['output']>;
+  _key?: Maybe<Scalars['String']['output']>;
+  /** Current document revision */
+  _rev?: Maybe<Scalars['String']['output']>;
+  /** Document type */
+  _type?: Maybe<Scalars['String']['output']>;
+  /** Date the document was last modified */
+  _updatedAt?: Maybe<Scalars['DateTime']['output']>;
+  orderRank?: Maybe<Scalars['String']['output']>;
+  socialIcon?: Maybe<Image>;
+  title?: Maybe<Scalars['String']['output']>;
+  url?: Maybe<Scalars['String']['output']>;
+};
+
+export type SocialLinksFilter = {
+  /** Apply filters on document level */
+  _?: InputMaybe<Sanity_DocumentFilter>;
+  _createdAt?: InputMaybe<DatetimeFilter>;
+  _id?: InputMaybe<IdFilter>;
+  _key?: InputMaybe<StringFilter>;
+  _rev?: InputMaybe<StringFilter>;
+  _type?: InputMaybe<StringFilter>;
+  _updatedAt?: InputMaybe<DatetimeFilter>;
+  orderRank?: InputMaybe<StringFilter>;
+  socialIcon?: InputMaybe<ImageFilter>;
+  title?: InputMaybe<StringFilter>;
+  url?: InputMaybe<StringFilter>;
+};
+
+export type SocialLinksSorting = {
+  _createdAt?: InputMaybe<SortOrder>;
+  _id?: InputMaybe<SortOrder>;
+  _key?: InputMaybe<SortOrder>;
+  _rev?: InputMaybe<SortOrder>;
+  _type?: InputMaybe<SortOrder>;
+  _updatedAt?: InputMaybe<SortOrder>;
+  orderRank?: InputMaybe<SortOrder>;
+  socialIcon?: InputMaybe<ImageSorting>;
+  title?: InputMaybe<SortOrder>;
+  url?: InputMaybe<SortOrder>;
+};
+
 export enum SortOrder {
   /** Sorts on the value in ascending order. */
   Asc = 'ASC',
@@ -998,6 +1060,11 @@ export type GetAllProjectsQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type GetAllProjectsQuery = { __typename?: 'RootQuery', allProjects: Array<{ __typename?: 'Projects', title?: string | null, handle?: string | null, contentRaw?: any | null }> };
 
+export type GetAllSocialLinksQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetAllSocialLinksQuery = { __typename?: 'RootQuery', allSocialLinks: Array<{ __typename?: 'SocialLinks', _key?: string | null, title?: string | null, url?: string | null, socialIcon?: { __typename?: 'Image', _key?: string | null, _type?: string | null, asset?: { __typename?: 'SanityImageAsset', altText?: string | null, url?: string | null } | null } | null }> };
+
 export type GetNavigationProjectsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -1022,6 +1089,23 @@ export const GetAllProjectsDocument = gql`
     title
     handle
     contentRaw
+  }
+}
+    `;
+export const GetAllSocialLinksDocument = gql`
+    query getAllSocialLinks {
+  allSocialLinks(sort: {orderRank: ASC}) {
+    _key
+    title
+    url
+    socialIcon {
+      _key
+      _type
+      asset {
+        altText
+        url
+      }
+    }
   }
 }
     `;
@@ -1076,6 +1160,9 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
   return {
     getAllProjects(variables?: GetAllProjectsQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<GetAllProjectsQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<GetAllProjectsQuery>(GetAllProjectsDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'getAllProjects', 'query');
+    },
+    getAllSocialLinks(variables?: GetAllSocialLinksQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<GetAllSocialLinksQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<GetAllSocialLinksQuery>(GetAllSocialLinksDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'getAllSocialLinks', 'query');
     },
     getNavigationProjects(variables?: GetNavigationProjectsQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<GetNavigationProjectsQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<GetNavigationProjectsQuery>(GetNavigationProjectsDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'getNavigationProjects', 'query');
