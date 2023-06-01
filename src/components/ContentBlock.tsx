@@ -15,6 +15,7 @@ interface ContentBlockProps {
 export interface ContentItem {
     _key:string;
     _type:string;
+    alt: string;
     level:number;
     listItem:string;
     style:string;
@@ -22,7 +23,7 @@ export interface ContentItem {
     marks:Array<string>;
     text:string;
     children:Array<ContentItemChild>;
-    verticalImageGallery:Array<Image>;
+    verticalImageGallery:Array<VerticalImage>;
     asset:CrossDatasetReference;
 }
 
@@ -31,6 +32,10 @@ export interface ContentItemChild {
     _type:string;
     marks:Array<string>;
     text:string;
+}
+
+interface VerticalImage extends Image {
+    alt: string;
 }
 
 export default function ContentBlock({mt=0, mb=0, my=0, gap=0, content}:ContentBlockProps):JSX.Element {
@@ -117,12 +122,12 @@ export default function ContentBlock({mt=0, mb=0, my=0, gap=0, content}:ContentB
                     return (
                         <div key={contentItem._key} className="flex gap-2 aspect-video justify-center my-8">
                             {contentItem.verticalImageGallery.map((verticalImage, index) => {
-                                return <LightboxImage key={verticalImage._key} sanityRef={verticalImage?.asset?._ref} alt={verticalImage.alt} title={verticalImage.alt} direction="vertical" />
+                                return <LightboxImage key={verticalImage._key} sanityRef={verticalImage?.asset?._ref || ''} alt={verticalImage.alt || ''} title={verticalImage.alt || ''} direction="vertical" />
                             })}
                         </div>
                     )
                 } else if(contentItem._type === 'horizontalImage') {
-                    return <LightboxImage key={contentItem._key} sanityRef={contentItem.asset._ref} alt={contentItem.alt} title={contentItem.alt} direction="horizontal" />
+                    return <LightboxImage key={contentItem._key} sanityRef={contentItem.asset._ref || ''} alt={contentItem.alt || ''} title={contentItem.alt || ''} direction="horizontal" />
                 } else {
                     return <></>
                 }
