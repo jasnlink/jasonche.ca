@@ -319,6 +319,8 @@ export type ProfileCard = Document & {
   highlightedSkills?: Maybe<Array<Maybe<Skill>>>;
   profileImage?: Maybe<ProfileImage>;
   resume?: Maybe<Resume>;
+  seoDesc?: Maybe<Scalars['String']['output']>;
+  seoTitle?: Maybe<Scalars['String']['output']>;
 };
 
 export type ProfileCardFilter = {
@@ -333,6 +335,8 @@ export type ProfileCardFilter = {
   fullName?: InputMaybe<StringFilter>;
   profileImage?: InputMaybe<ProfileImageFilter>;
   resume?: InputMaybe<ResumeFilter>;
+  seoDesc?: InputMaybe<StringFilter>;
+  seoTitle?: InputMaybe<StringFilter>;
 };
 
 export type ProfileCardSorting = {
@@ -345,6 +349,8 @@ export type ProfileCardSorting = {
   fullName?: InputMaybe<SortOrder>;
   profileImage?: InputMaybe<ProfileImageSorting>;
   resume?: InputMaybe<ResumeSorting>;
+  seoDesc?: InputMaybe<SortOrder>;
+  seoTitle?: InputMaybe<SortOrder>;
 };
 
 export type ProfileImage = {
@@ -390,6 +396,8 @@ export type Projects = Document & {
   contentRaw?: Maybe<Scalars['JSON']['output']>;
   handle?: Maybe<Scalars['String']['output']>;
   orderRank?: Maybe<Scalars['String']['output']>;
+  seoDesc?: Maybe<Scalars['String']['output']>;
+  seoTitle?: Maybe<Scalars['String']['output']>;
   title?: Maybe<Scalars['String']['output']>;
 };
 
@@ -404,6 +412,8 @@ export type ProjectsFilter = {
   _updatedAt?: InputMaybe<DatetimeFilter>;
   handle?: InputMaybe<StringFilter>;
   orderRank?: InputMaybe<StringFilter>;
+  seoDesc?: InputMaybe<StringFilter>;
+  seoTitle?: InputMaybe<StringFilter>;
   title?: InputMaybe<StringFilter>;
 };
 
@@ -416,6 +426,8 @@ export type ProjectsSorting = {
   _updatedAt?: InputMaybe<SortOrder>;
   handle?: InputMaybe<SortOrder>;
   orderRank?: InputMaybe<SortOrder>;
+  seoDesc?: InputMaybe<SortOrder>;
+  seoTitle?: InputMaybe<SortOrder>;
   title?: InputMaybe<SortOrder>;
 };
 
@@ -658,7 +670,6 @@ export type SanityImageAsset = Document & {
   /** Document ID */
   _id?: Maybe<Scalars['ID']['output']>;
   _key?: Maybe<Scalars['String']['output']>;
-  _ref?: Maybe<Scalars['String']['output']>;
   /** Current document revision */
   _rev?: Maybe<Scalars['String']['output']>;
   /** Document type */
@@ -1059,7 +1070,7 @@ export type VerticalImageGallerySorting = {
 export type GetAllProjectsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetAllProjectsQuery = { __typename?: 'RootQuery', allProjects: Array<{ __typename?: 'Projects', title?: string | null, handle?: string | null, contentRaw?: any | null }> };
+export type GetAllProjectsQuery = { __typename?: 'RootQuery', allProjects: Array<{ __typename?: 'Projects', title?: string | null, handle?: string | null, contentRaw?: any | null, seoTitle?: string | null, seoDesc?: string | null }> };
 
 export type GetAllSocialLinksQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -1081,7 +1092,7 @@ export type GetProjectByHandleQueryVariables = Exact<{
 }>;
 
 
-export type GetProjectByHandleQuery = { __typename?: 'RootQuery', allProjects: Array<{ __typename?: 'Projects', title?: string | null, handle?: string | null, contentRaw?: any | null }> };
+export type GetProjectByHandleQuery = { __typename?: 'RootQuery', allProjects: Array<{ __typename?: 'Projects', title?: string | null, handle?: string | null, contentRaw?: any | null, seoTitle?: string | null, seoDesc?: string | null }> };
 
 
 export const GetAllProjectsDocument = gql`
@@ -1090,6 +1101,8 @@ export const GetAllProjectsDocument = gql`
     title
     handle
     contentRaw
+    seoTitle
+    seoDesc
   }
 }
     `;
@@ -1151,6 +1164,8 @@ export const GetProjectByHandleDocument = gql`
     title
     handle
     contentRaw
+    seoTitle
+    seoDesc
   }
 }
     `;

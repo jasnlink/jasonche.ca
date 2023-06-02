@@ -2,7 +2,7 @@ import { dehydrate } from 'react-query'
 import { queryClient } from '@/src/api'
 import { getNavigationProjects, getAllSocialLinks } from '../api';
 
-export async function getServerSideProps() {
+export async function getStaticProps() {
     await queryClient.prefetchQuery(['navigationProjects'], () => getNavigationProjects())
     await queryClient.prefetchQuery(['socialLinks'], () => getAllSocialLinks())
 
@@ -28,15 +28,15 @@ export default function NavMenu() {
 
     const [loading, setLoading] = useState<boolean>(true)
     const router = useRouter()
-    let handle = ''
+    let handle:string | string [] = ''
     if(router.query.handle) {
-        handle = router.query.handle[0];
+        handle = router.query.handle;
     }
     const path = router.asPath
 
     const [selectedItem, setSelectedItem] = useState<Array<number | null>>([0, null])
 
-    const getMatchingHandleId = useCallback((searchHandle:string, itemList:Array<NavItem>):number | null => {
+    const getMatchingHandleId = useCallback((searchHandle:string | string [], itemList:Array<NavItem>):number | null => {
         for(let i = 0; i < itemList.length; i++) {
             const item = itemList[i]
             

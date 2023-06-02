@@ -3,5 +3,7 @@ query getAllProjects {
         title
         handle
         contentRaw
+        seoTitle
+        seoDesc
     }
 }

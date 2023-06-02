@@ -2,7 +2,7 @@ import useMarginClass from "../hooks/useMarginClass";
 import Text from "./Text";
 import List from "./List";
 import LightboxImage from "./LightboxImage";
-import { Image, CrossDatasetReference } from "../generated/graphql";
+import { Image, CrossDatasetReference, SanityImageAsset } from "../generated/graphql";
 
 interface ContentBlockProps {
     mt?:number;
@@ -34,8 +34,13 @@ export interface ContentItemChild {
     text:string;
 }
 
-interface VerticalImage extends Image {
-    alt: string;
+interface VerticalImage extends Omit<Image, 'asset'> {
+    alt:string;
+    asset:VerticalImageAsset;
+}
+
+interface VerticalImageAsset extends SanityImageAsset {
+    _ref:string;
 }
 
 export default function ContentBlock({mt=0, mb=0, my=0, gap=0, content}:ContentBlockProps):JSX.Element {

@@ -11,7 +11,7 @@ import Link from 'next/link'
 import Text from '@/src/components/Text'
 import ContentBlock from '@/src/components/ContentBlock'
 
-export async function getServerSideProps() {
+export async function getStaticProps() {
     await queryClient.prefetchQuery(['profileCard'], () => getProfileCard())
 
     return {
