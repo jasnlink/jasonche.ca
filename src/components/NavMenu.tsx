@@ -172,15 +172,12 @@ export default function NavMenu() {
 
     return (
         <>
-            {!!loading && (
-                <></>
-            )}
-            {!!!loading && (
-                <>
-                    <div role="button" className="z-10 flex items-center gap-2 fixed top-0 left-0 w-screen h-14 px-4 bg-zinc-900 border border-zinc-50/20 lg:hidden" onClick={() => setMenuOpen(true)}>
-                        <Image src={navIcon} alt="Navigation" className="w-10 h-10" />
-                    </div>
-                    <div ref={menuRef} onTransitionEnd={handleTransitionEnd} className="z-20 lg:z-0 fixed h-full transition-all duration-500 -translate-x-full w-full hidden lg:block lg:relative lg:transition-none lg:duration-0 lg:translate-x-0 lg:w-auto lg:col-span-3 2xl:col-span-2 bg-zinc-900 border border-zinc-50/20">
+            <div role="button" className="z-10 flex items-center gap-2 fixed top-0 left-0 w-screen h-14 px-4 bg-zinc-900 border border-zinc-50/20 lg:hidden" onClick={() => setMenuOpen(true)}>
+                <Image src={navIcon} alt="Navigation" className="w-10 h-10" />
+            </div>
+            <div ref={menuRef} onTransitionEnd={handleTransitionEnd} className="z-20 lg:z-0 fixed h-full transition-all duration-500 -translate-x-full w-full hidden lg:block lg:relative lg:transition-none lg:duration-0 lg:translate-x-0 lg:w-auto lg:col-span-3 2xl:col-span-2 bg-zinc-900 border border-zinc-50/20">
+                {!!!loading && (
+                    <>
                         <div className="lg:sticky lg:top-0 lg:left-0 lg:h-screen lg:overflow-auto py-4 px-4">
                             <div className="flex gap-2 items-center">
                                 <Image src={navIcon} alt="Navigation" className="w-10 h-10" />
@@ -232,11 +229,9 @@ export default function NavMenu() {
                         <div role="button" className="flex items-center justify-center gap-2 absolute top-0 right-0 mr-4 mt-5 h-8 w-8 bg-white rounded-full lg:hidden" onClick={() => setMenuOpen(false)}>
                             <Image src={closeIcon} alt="Navigation" className="w-3 h-3" />
                         </div>
-                    </div>
-                </>
-            )}
+                    </>
+                )}
+            </div>
         </>
-
     )
-
 }
