@@ -3,5 +3,5 @@ export default function useImageUrl(imageReference:string=''):string {
         return imageReference
     }
     let splitRef = imageReference.split('-')
-    return `https://cdn.sanity.io/images/q8h9ggfv/production/${splitRef[1]}-${splitRef[2]}.${splitRef[3]}`
+    return `https://apicdn.sanity.io/images/q8h9ggfv/production/${splitRef[1]}-${splitRef[2]}.${splitRef[3]}`
 }

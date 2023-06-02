@@ -14,7 +14,7 @@ export default function Text({ variant, my=0, mt=0, mb=0, children }:PropsWithCh
 
     switch (variant) {
         case 'title': 
-            return <h1 className={`${marginClass}font-extrabold text-4xl`}>{children}</h1>
+            return <h1 className={`${marginClass}font-bold text-4xl`}>{children}</h1>
         case 'subheading':
             return <h2 className={`${marginClass}font-bold text-3xl`}>{children}</h2>
         case 'paragraph':

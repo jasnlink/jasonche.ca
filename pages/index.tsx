@@ -2,6 +2,7 @@ import { dehydrate } from 'react-query'
 import { useQuery } from 'react-query'
 import { queryClient, getProfileCard } from '@/src/api'
 
+import { useState } from 'react'
 
 import Image from 'next/image'
 import { Inter } from 'next/font/google'
@@ -30,6 +31,8 @@ export default function Home() {
 
     const pageTitle = `${profileData?.fullName} - Full Stack Web Software Developer`
 
+    const [isProfileImageLoading, setIsProfileImageLoading] = useState<boolean>(true)
+
     return (
         <>
             <Head>
@@ -38,7 +41,12 @@ export default function Home() {
             </Head>
             <div className="h-full flex items-center justify-center">
                 <div className="mx-auto max-w-md bg-zinc-900 p-8 lg:p-12 rounded-sm">
-                    <Image src={profileData?.profileImage?.asset?.url || ''} alt={profileData?.profileImage?.alt || ''} height={100} width={100} className="rounded-full" />
+                    <div className="relative w-[100px] h-[100px]">
+                        <Image src={profileData?.profileImage?.asset?.url || ''} alt={profileData?.profileImage?.alt || ''} height={100} width={100} className="rounded-full" onLoadingComplete={() => {setIsProfileImageLoading(false)}} />
+                        {!!isProfileImageLoading && (
+                            <div className="rounded-full absolute top-0 left-0 right-0 bottom-0 bg-zinc-700 animate-pulse"></div>
+                        )}
+                    </div>
                     <Text mt={6} variant="title">{profileData?.fullName}</Text>
                     <ContentBlock mt={6} gap={6} content={profileData?.bioRaw} />
                     <div className="mt-6">
