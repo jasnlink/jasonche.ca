@@ -48,7 +48,8 @@ export async function getStaticProps({ params }:Params) {
     return {
         props: {
             projectData,
-        }
+        },
+        revalidate: 60,
     }
 
 }
