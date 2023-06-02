@@ -8,17 +8,11 @@ import NavMenu from '@/src/components/NavMenu'
 import Content from '@/src/components/Content'
 
 import dynamic from 'next/dynamic'
-import { useEffect, useState } from 'react'
 
 export default function App({ Component, pageProps }: AppProps) {
 
     const isProduction = process.env.NODE_ENV === "production";
-    const [loadDynamicGoogleTag, setLoadDynamicGoogleTag] = useState<boolean>(false)
-    let DynamicGoogleTag = dynamic(() => import('@/src/components/GoogleTag'))
-
-    useEffect(() => {
-        setLoadDynamicGoogleTag(true)
-    }, [])
+    const DynamicGoogleTag = dynamic(() => import('@/src/components/GoogleTag'))
 
     return (
         <QueryClientProvider client={queryClient}>
@@ -26,9 +20,9 @@ export default function App({ Component, pageProps }: AppProps) {
                 <Layout>
                     <NavMenu />
                     <Content>
-                        {!!isProduction && [ !!loadDynamicGoogleTag && (
+                        {!!isProduction && (
                             <DynamicGoogleTag />
-                        )]}
+                        )}
                         <Component {...pageProps} />
                     </Content>
                 </Layout>

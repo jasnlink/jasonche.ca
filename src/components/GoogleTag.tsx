@@ -3,16 +3,13 @@ import Script from "next/script"
 export default function GoogleTag() {
     return (
         <>
-            <Script defer src="https://www.googletagmanager.com/gtag/js?id=G-YLMZM6JBQX" strategy="lazyOnload" />
             <Script defer id="google-analytics" strategy="lazyOnload">
                 {`
-                    window.dataLayer = window.dataLayer || [];
-                    function gtag(){dataLayer.push(arguments);}
-                    gtag('js', new Date());
-                    gtag('config', 'G-YLMZM6JBQX');
-                    gtag('config', 'G-YLMZM6JBQX', {
-                        page_path: window.location.pathname,
-                    });
+                    (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+                    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+                    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+                    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+                    })(window,document,'script','dataLayer', 'G-YLMZM6JBQX');
                 `}
             </Script>
         </>
