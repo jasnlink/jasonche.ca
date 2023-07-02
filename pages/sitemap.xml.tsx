@@ -1,5 +1,5 @@
 //pages/sitemap.xml.js
-function generateSiteMap(urls) {
+function generateSiteMap(urls:Array<Url>) {
 
     const HOMEPAGE_URL = `https://www.jasonche.ca`
 
@@ -9,13 +9,13 @@ function generateSiteMap(urls) {
             <url>
                 <loc>${HOMEPAGE_URL}</loc>
             </url>
-            ${urls.map(({ handle }: { handle:string; }) => {
+            ${urls ? urls.map((url) => {
                 return `
                     <url>
-                        <loc>${`${HOMEPAGE_URL}/projects/${handle}`}</loc>
+                        <loc>${`${HOMEPAGE_URL}/projects/${url.handle}`}</loc>
                     </url>
                     `;
-            }).join('')}
+            }).join('') : ``}
         </urlset>
     `;
 }
@@ -28,14 +28,15 @@ import { queryClient } from '@/src/api'
 import { getNavigationProjects } from '@/src/api';
 import { RootQuery } from '@/src/generated/graphql';
 import { Maybe } from '@/src/generated/graphql';
+import { ServerResponse } from 'http';
 
-export async function getServerSideProps({ res }) {
+interface Url {
+    handle: Maybe<string> | undefined;
+}
+export async function getServerSideProps({ res }: { res:ServerResponse }) {
     await queryClient.prefetchQuery(['navigationProjects'], () => getNavigationProjects())
     const navigationProjectsData:RootQuery | undefined = await queryClient.getQueryData(['navigationProjects'])
 
-    interface Url {
-        handle: Maybe<string> | undefined;
-    }
     let urls:Array<Url> = []
 
     if(navigationProjectsData) {
