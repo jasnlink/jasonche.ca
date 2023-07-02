@@ -1,6 +1,7 @@
 import { queryClient } from '@/src/api'
 import { useQuery } from 'react-query'
-import { getProjectByHandle, getProfileCard, getAllProjects, getNavigationProjects } from '@/src/api'
+import { getProjectByHandle, getProfileCard, getNavigationProjects } from '@/src/api'
+import { Projects } from '@/src/generated/graphql'
 import { RootQuery } from '@/src/generated/graphql'
 
 interface Params {
@@ -44,7 +45,16 @@ export async function getStaticProps({ params }:Params) {
     }
 
     const projectDataByHandle = await getProjectDataByHandle(params.handle)
-    const projectData:string = JSON.stringify(projectDataByHandle)
+    const projectDataResult:Array<Projects> = projectDataByHandle.projectByHandleQueryResult.allProjects
+
+    if (!projectDataResult.length) {
+        return {
+            notFound: true
+        }
+    }
+    
+    const projectData = JSON.stringify(projectDataResult[0])
+    
     return {
         props: {
             projectData,
@@ -56,11 +66,9 @@ export async function getStaticProps({ params }:Params) {
 
 import { useRouter } from "next/router"
 import Head from 'next/head'
-import { useEffect, useState, Fragment } from "react";
+import { useEffect, useState } from "react";
 import Text from "@/src/components/Text";
 import ContentBlock from '@/src/components/ContentBlock';
-
-import { Projects } from '@/src/generated/graphql';
 
 export default function Page({ projectData }:PageProps) {
 
@@ -75,8 +83,9 @@ export default function Page({ projectData }:PageProps) {
 
     useEffect(() => {
         if(projectData) {
+            console.log('projectData',projectData)
             const parsedAllProjectData = JSON.parse(projectData)
-            setPageContent(parsedAllProjectData.projectByHandleQueryResult.allProjects[0])
+            setPageContent(parsedAllProjectData)
             setLoading(false)
         }
     }, [projectData])
