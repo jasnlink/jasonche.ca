@@ -3,6 +3,7 @@ import { useQuery } from 'react-query'
 import { getProjectByHandle, getProfileCard, getNavigationProjects } from '@/src/api'
 import { Projects } from '@/src/generated/graphql'
 import { RootQuery } from '@/src/generated/graphql'
+import { GetProjectByHandleQuery } from '@/src/generated/graphql'
 
 interface Params {
     params:Handle
@@ -37,7 +38,7 @@ export async function getStaticProps({ params }:Params) {
 
     async function getProjectDataByHandle(handle:string) {
         await queryClient.prefetchQuery(['projectByHandle'], () => getProjectByHandle({searchHandle: handle}))
-        const projectByHandleQueryResult = await queryClient.getQueryData(['projectByHandle'])
+        const projectByHandleQueryResult:GetProjectByHandleQuery | undefined = await queryClient.getQueryData(['projectByHandle'])
         return {
             handle,
             projectByHandleQueryResult
@@ -45,9 +46,13 @@ export async function getStaticProps({ params }:Params) {
     }
 
     const projectDataByHandle = await getProjectDataByHandle(params.handle)
-    const projectDataResult:Array<Projects> = projectDataByHandle.projectByHandleQueryResult.allProjects
+    let projectDataResult:Array<Projects> | undefined = []
 
-    if (!projectDataResult.length) {
+    if(projectDataByHandle !== undefined) {
+        projectDataResult = projectDataByHandle?.projectByHandleQueryResult?.allProjects
+    }
+
+    if (projectDataResult === undefined || !projectDataResult.length) {
         return {
             notFound: true
         }
