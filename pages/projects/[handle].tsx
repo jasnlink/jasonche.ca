@@ -88,7 +88,6 @@ export default function Page({ projectData }:PageProps) {
 
     useEffect(() => {
         if(projectData) {
-            console.log('projectData',projectData)
             const parsedAllProjectData = JSON.parse(projectData)
             setPageContent(parsedAllProjectData)
             setLoading(false)
