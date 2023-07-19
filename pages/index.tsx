@@ -12,6 +12,9 @@ import Link from 'next/link'
 import Text from '@/src/components/Text'
 import ContentBlock from '@/src/components/ContentBlock'
 
+import { Partytown } from '@builder.io/partytown/react'
+import Script from 'next/script'
+
 export async function getStaticProps() {
     await queryClient.prefetchQuery(['profileCard'], () => getProfileCard())
 
@@ -34,11 +37,36 @@ export default function Home() {
 
     const [isProfileImageLoading, setIsProfileImageLoading] = useState<boolean>(true)
 
+    const isProduction = process.env.NODE_ENV === "production";
+
     return (
         <>
             <Head>
                 <title>{pageTitle}</title>
                 <meta property="og:title" content={pageTitle} key="title" />
+                {!!isProduction && (
+                    <>
+                        <Partytown debug={true} logScriptExecution={true} forward={['dataLayer', 'gtag']} />
+                        <Script
+                            id="google-analytics"
+                            type="text/partytown"
+                            strategy="afterInteractive"
+                            src="https://www.googletagmanager.com/gtag/js?id=G-YLMZM6JBQX"
+                        />
+                        <Script
+                            id="google-tag"
+                            type="text/partytown"
+                            strategy="afterInteractive"
+                        >
+                            {`
+                                window.dataLayer = window.dataLayer || [];
+                                window.gtag = function gtag(){window.dataLayer.push(arguments);}
+                                gtag('js', new Date());
+                                gtag('config', 'G-YLMZM6JBQX',{ 'debug_mode':true });
+                            `}
+                        </Script>
+                    </>
+                )}
             </Head>
             <div className="h-full flex items-center justify-center">
                 <div className="mx-auto max-w-md bg-zinc-900 p-8 lg:p-12 rounded-sm">
