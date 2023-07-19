@@ -1,7 +1,7 @@
 //pages/sitemap.xml.js
 function generateSiteMap(urls:Array<Url>) {
 
-    const HOMEPAGE_URL = `https://www.jasonche.ca`
+    const HOMEPAGE_URL = `https://jasonche.ca`
 
     return `<?xml version="1.0" encoding="UTF-8"?>
         <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
