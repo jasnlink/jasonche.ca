@@ -9,6 +9,7 @@ import Content from '@/src/components/Content'
 
 import { Partytown } from '@builder.io/partytown/react'
 import Script from 'next/script'
+import Head from 'next/head'
 
 export default function App({ Component, pageProps }: AppProps) {
 
@@ -16,33 +17,35 @@ export default function App({ Component, pageProps }: AppProps) {
 
     return (
         <QueryClientProvider client={queryClient}>
+            <Head>
+                {!!isProduction && (
+                    <>
+                        <Partytown debug={true} logScriptExecution={true} forward={['dataLayer', 'gtag']} />
+                        <Script
+                            id="google-analytics"
+                            type="text/partytown"
+                            strategy="afterInteractive"
+                            src="https://www.googletagmanager.com/gtag/js?id=G-YLMZM6JBQX"
+                        />
+                        <Script
+                            id="google-tag"
+                            type="text/partytown"
+                            strategy="afterInteractive"
+                        >
+                            {`
+                                window.dataLayer = window.dataLayer || [];
+                                window.gtag = function gtag(){window.dataLayer.push(arguments);}
+                                gtag('js', new Date());
+                                gtag('config', 'G-YLMZM6JBQX',{ 'debug_mode':true });
+                            `}
+                        </Script>
+                    </>
+                )}
+            </Head>
             <Hydrate state={pageProps.dehydratedState}>
                 <Layout>
                     <NavMenu />
                     <Content>
-                        {!!isProduction && (
-                            <>
-                                <Partytown debug={true} logScriptExecution={true} forward={['dataLayer', 'gtag']} />
-                                <Script
-                                    id="google-analytics"
-                                    type="text/partytown"
-                                    strategy="afterInteractive"
-                                    src="https://www.googletagmanager.com/gtag/js?id=G-YLMZM6JBQX"
-                                />
-                                <Script
-                                    id="google-tag"
-                                    type="text/partytown"
-                                    strategy="afterInteractive"
-                                >
-                                    {`
-                                        window.dataLayer = window.dataLayer || [];
-                                        window.gtag = function gtag(){window.dataLayer.push(arguments);}
-                                        gtag('js', new Date());
-                                        gtag('config', 'G-YLMZM6JBQX',{ 'debug_mode':true });
-                                    `}
-                                </Script>
-                            </>
-                        )}
                         <Component {...pageProps} />
                     </Content>
                 </Layout>
