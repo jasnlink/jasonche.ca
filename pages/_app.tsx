@@ -7,45 +7,22 @@ import Layout from '@/src/components/Layout'
 import NavMenu from '@/src/components/NavMenu'
 import Content from '@/src/components/Content'
 
-import { Partytown } from '@builder.io/partytown/react'
-import Script from 'next/script'
-import Head from 'next/head'
+import dynamic from 'next/dynamic'
 
 export default function App({ Component, pageProps }: AppProps) {
 
     const isProduction = process.env.NODE_ENV === "production";
+    const DynamicGoogleTag = dynamic(() => import('@/src/components/GoogleTag'))
 
     return (
         <QueryClientProvider client={queryClient}>
-            <Head>
-                {!!isProduction && (
-                    <>
-                        <Partytown debug={true} logScriptExecution={true} forward={['dataLayer', 'gtag']} />
-                        <Script
-                            id="google-analytics"
-                            type="text/partytown"
-                            strategy="afterInteractive"
-                            src="https://www.googletagmanager.com/gtag/js?id=G-YLMZM6JBQX"
-                        />
-                        <Script
-                            id="google-tag"
-                            type="text/partytown"
-                            strategy="afterInteractive"
-                        >
-                            {`
-                                window.dataLayer = window.dataLayer || [];
-                                window.gtag = function gtag(){window.dataLayer.push(arguments);}
-                                gtag('js', new Date());
-                                gtag('config', 'G-YLMZM6JBQX',{ 'debug_mode':true });
-                            `}
-                        </Script>
-                    </>
-                )}
-            </Head>
             <Hydrate state={pageProps.dehydratedState}>
                 <Layout>
                     <NavMenu />
                     <Content>
+                        {!!isProduction && (
+                            <DynamicGoogleTag />
+                        )}
                         <Component {...pageProps} />
                     </Content>
                 </Layout>
