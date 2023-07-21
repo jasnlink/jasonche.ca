@@ -187,7 +187,7 @@ export default function NavMenu() {
                                 {navItems.map((navItem, navItemIndex) => (
                                     <Fragment key={navItem._key}>
                                         <MenuItem 
-                                            href={navItem.path || ''}
+                                            href={navItem.path ?? ``}
                                             onClick={(e) => handleSelect(e, [navItemIndex, null])}
                                             selected={selectedItem[0] === navItemIndex}
                                         >
@@ -196,7 +196,7 @@ export default function NavMenu() {
                                         <div className={selectedItem[0] === navItemIndex ? "transition-all border-l border-l-zinc-50" : "transition-all border-l border-l-transparent"}>
                                             {navItem?.subItems?.map((subItem, subItemIndex, array) => (
                                                 <MenuItem
-                                                    href={subItem.path || ''}
+                                                    href={subItem.path ?? ``}
                                                     key={subItem._key}
                                                     sub={true}
                                                     onClick={(e) => handleSelect(e, [navItemIndex, subItemIndex])}
@@ -213,14 +213,14 @@ export default function NavMenu() {
                             <div>
                                 {socialLinkItems.map((linkItem) => (
                                     <MenuItem 
-                                        href={linkItem.url || ''}
+                                        href={linkItem.url ?? ``}
                                         key={linkItem._id}
                                         target="_blank"
                                     >
                                         <div className="flex items-center gap-2">
-                                            <Image src={linkItem.socialIcon?.asset?.url || ''} width={32} height={32} alt={linkItem.title || ''} className="w-5 h-5" />
+                                            <Image src={linkItem.socialIcon?.asset?.url ?? ``} width={32} height={32} alt={linkItem.title ?? ``} className="w-5 h-5" />
                                             <span className="font-medium">{linkItem.title}</span>
-                                            <Image src={linkIcon} alt={linkItem.title || ''} className="w-4 h-4" />
+                                            <Image src={linkIcon} alt={linkItem.title ?? ``} className="w-4 h-4" />
                                         </div>
                                     </MenuItem>
                                 ))}

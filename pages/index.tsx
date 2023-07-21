@@ -38,12 +38,12 @@ export default function Home() {
         <>
             <Head>
                 <title>{pageTitle}</title>
-                <meta property="og:title" content={pageTitle} key="title" />
+                <meta name="description" content={profileData?.seoDesc ?? ``} />
             </Head>
             <div className="h-full flex items-center justify-center">
                 <div className="mx-auto max-w-md bg-zinc-900 p-8 lg:p-12 rounded-sm">
                     <div className="relative w-[100px] h-[100px]">
-                        <Image src={profileData?.profileImage?.asset?.url || ''} alt={profileData?.profileImage?.alt || ''} height={100} width={100} className="rounded-full" onLoadingComplete={() => {setIsProfileImageLoading(false)}} />
+                        <Image src={profileData?.profileImage?.asset?.url ?? ``} alt={profileData?.profileImage?.alt ?? ``} height={100} width={100} className="rounded-full" onLoadingComplete={() => {setIsProfileImageLoading(false)}} />
                         {!!isProfileImageLoading && (
                             <div className="rounded-full absolute top-0 left-0 right-0 bottom-0 bg-zinc-700 animate-pulse"></div>
                         )}
@@ -56,7 +56,7 @@ export default function Home() {
                             return <div key={index} className="mt-4">{skillContent}</div>
                         })}
                     </div>
-                    <Link className="mt-8 text-black bg-zinc-50 font-medium rounded-sm py-2 px-4 text-center select-none block border border-transparent transition-all hover:bg-transparent hover:text-zinc-50 hover:border-zinc-50" href={profileData?.resume?.asset?.url || ''} target="_blank">See my resume</Link>
+                    <Link className="mt-8 text-black bg-zinc-50 font-medium rounded-sm py-2 px-4 text-center select-none block border border-transparent transition-all hover:bg-transparent hover:text-zinc-50 hover:border-zinc-50" href={profileData?.resume?.asset?.url ?? ``} target="_blank">See my resume</Link>
                 </div>
             </div>
         </>

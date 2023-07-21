@@ -1085,7 +1085,7 @@ export type GetNavigationProjectsQuery = { __typename?: 'RootQuery', allProjects
 export type GetProfileCardQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetProfileCardQuery = { __typename?: 'RootQuery', allProfileCard: Array<{ __typename?: 'ProfileCard', fullName?: string | null, bioRaw?: any | null, profileImage?: { __typename?: 'ProfileImage', alt?: string | null, asset?: { __typename?: 'SanityImageAsset', url?: string | null } | null } | null, highlightedSkills?: Array<{ __typename?: 'Skill', skill?: string | null, years?: number | null } | null> | null, resume?: { __typename?: 'Resume', description?: string | null, asset?: { __typename?: 'SanityFileAsset', url?: string | null } | null } | null }> };
+export type GetProfileCardQuery = { __typename?: 'RootQuery', allProfileCard: Array<{ __typename?: 'ProfileCard', fullName?: string | null, bioRaw?: any | null, seoDesc?: string | null, seoTitle?: string | null, profileImage?: { __typename?: 'ProfileImage', alt?: string | null, asset?: { __typename?: 'SanityImageAsset', url?: string | null } | null } | null, highlightedSkills?: Array<{ __typename?: 'Skill', skill?: string | null, years?: number | null } | null> | null, resume?: { __typename?: 'Resume', description?: string | null, asset?: { __typename?: 'SanityFileAsset', url?: string | null } | null } | null }> };
 
 export type GetProjectByHandleQueryVariables = Exact<{
   searchHandle: Scalars['String']['input'];
@@ -1155,6 +1155,8 @@ export const GetProfileCardDocument = gql`
         url
       }
     }
+    seoDesc
+    seoTitle
   }
 }
     `;

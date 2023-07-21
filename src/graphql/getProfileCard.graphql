@@ -18,5 +18,7 @@ query getProfileCard {
                 url
             }
         }
+        seoDesc
+        seoTitle
     }
 }

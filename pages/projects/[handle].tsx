@@ -95,7 +95,7 @@ export default function Page({ projectData }:PageProps) {
     }, [projectData])
 
     const profileCardQueryResult = useQuery(['profileCard'], () => getProfileCard())
-    const pageTitle = `${profileCardQueryResult.data?.allProfileCard[0].fullName} - ${pageContent?.title || ''}`
+    const pageTitle = `${profileCardQueryResult.data?.allProfileCard[0].fullName} - ${pageContent?.title ?? ``}`
 
     if (router.isFallback) {
         return <div>loading...</div>
@@ -108,7 +108,7 @@ export default function Page({ projectData }:PageProps) {
             <>
                 <Head>
                     <title>{pageTitle}</title>
-                    <meta property="og:title" content={pageTitle} key="title" />
+                    <meta property="description" content={pageContent?.seoDesc ?? ``} />
                 </Head>
                 <Text mt={6} variant="title">{pageContent?.title}</Text>
                 <ContentBlock mt={6} gap={4} content={pageContent?.contentRaw} />
