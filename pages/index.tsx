@@ -48,8 +48,8 @@ export default function Home() {
                             <div className="rounded-full absolute top-0 left-0 right-0 bottom-0 bg-zinc-700 animate-pulse"></div>
                         )}
                     </div>
-                    <Text mt={6} variant="title">{profileData?.fullName}</Text>
-                    <ContentBlock mt={6} gap={6} content={profileData?.bioRaw} />
+                    <Text sx={`mt-6`} variant="title">{profileData?.fullName}</Text>
+                    <ContentBlock sx={`mt-6`} gap={6} content={profileData?.bioRaw} />
                     <div className="mt-6">
                         {profileData?.highlightedSkills?.map((skill, index) => {
                             let skillContent = `${skill?.skill}: ${skill?.years} years`

@@ -1,13 +1,10 @@
-import useMarginClass from "../hooks/useMarginClass";
 import Text from "./Text";
 import List from "./List";
 import LightboxImage from "./LightboxImage";
 import { Image, CrossDatasetReference, SanityImageAsset } from "../generated/graphql";
 
 interface ContentBlockProps {
-    mt?:number;
-    mb?:number;
-    my?:number;
+    sx?: string;
     gap?:number;
     content:Array<ContentItem>;
 }
@@ -43,9 +40,7 @@ interface VerticalImageAsset extends SanityImageAsset {
     _ref:string;
 }
 
-export default function ContentBlock({mt=0, mb=0, my=0, gap=0, content}:ContentBlockProps):JSX.Element {
-
-    const marginClass:string = useMarginClass({my, mt, mb})
+export default function ContentBlock({sx=``, gap=0, content}:ContentBlockProps):JSX.Element {
 
     interface TextBlockProps {
         blockMarks:Array<string>;
@@ -79,7 +74,7 @@ export default function ContentBlock({mt=0, mb=0, my=0, gap=0, content}:ContentB
     let listContent:Array<JSX.Element> = []
 
     return (
-        <div className={`${marginClass}`}>
+        <div className={`${sx}`}>
             {content?.map((contentItem:ContentItem, index:number, contentItemArray:Array<ContentItem>) => {
                 if(contentItem._type === 'block') {
                     if(contentItem.style === 'normal' && !contentItem.listItem) {
@@ -94,7 +89,7 @@ export default function ContentBlock({mt=0, mb=0, my=0, gap=0, content}:ContentB
                         )
                     } else if(contentItem.style === 'h2') {
                         return (
-                            <Text key={contentItem._key} mt={gap ? gap * 2 : 0} variant="subheading">
+                            <Text key={contentItem._key} sx={gap ? `mt-${gap * 2}` : ``} variant="subheading">
                                 {contentItem?.children.map((childrenBlock, index) => {
                                     if(childrenBlock._type === 'span') {
                                         return <TextBlock key={childrenBlock._key} blockMarks={childrenBlock.marks} content={childrenBlock.text} />

@@ -11,5 +11,7 @@ query getProjectByHandle($searchHandle:String!) {
         contentRaw
         seoTitle
         seoDesc
+        githubSourceUrl
+        liveDemoUrl
     }
 }

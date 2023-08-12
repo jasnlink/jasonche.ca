@@ -34,6 +34,8 @@ export type BlockOrHorizontalImageOrVerticalImageGallery = Block | HorizontalIma
 export type BooleanFilter = {
   /** Checks if the value is equal to the given input. */
   eq?: InputMaybe<Scalars['Boolean']['input']>;
+  /** Checks if the value is defined. */
+  is_defined?: InputMaybe<Scalars['Boolean']['input']>;
   /** Checks if the value is not equal to the given input. */
   neq?: InputMaybe<Scalars['Boolean']['input']>;
 };
@@ -73,6 +75,8 @@ export type DateFilter = {
   gt?: InputMaybe<Scalars['Date']['input']>;
   /** Checks if the value is greater than or equal to the given input. */
   gte?: InputMaybe<Scalars['Date']['input']>;
+  /** Checks if the value is defined. */
+  is_defined?: InputMaybe<Scalars['Boolean']['input']>;
   /** Checks if the value is lesser than the given input. */
   lt?: InputMaybe<Scalars['Date']['input']>;
   /** Checks if the value is lesser than or equal to the given input. */
@@ -88,6 +92,8 @@ export type DatetimeFilter = {
   gt?: InputMaybe<Scalars['DateTime']['input']>;
   /** Checks if the value is greater than or equal to the given input. */
   gte?: InputMaybe<Scalars['DateTime']['input']>;
+  /** Checks if the value is defined. */
+  is_defined?: InputMaybe<Scalars['Boolean']['input']>;
   /** Checks if the value is lesser than the given input. */
   lt?: InputMaybe<Scalars['DateTime']['input']>;
   /** Checks if the value is lesser than or equal to the given input. */
@@ -153,6 +159,8 @@ export type FloatFilter = {
   gt?: InputMaybe<Scalars['Float']['input']>;
   /** Checks if the value is greater than or equal to the given input. */
   gte?: InputMaybe<Scalars['Float']['input']>;
+  /** Checks if the value is defined. */
+  is_defined?: InputMaybe<Scalars['Boolean']['input']>;
   /** Checks if the value is lesser than the given input. */
   lt?: InputMaybe<Scalars['Float']['input']>;
   /** Checks if the value is lesser than or equal to the given input. */
@@ -255,6 +263,8 @@ export type IntFilter = {
   gt?: InputMaybe<Scalars['Int']['input']>;
   /** Checks if the value is greater than or equal to the given input. */
   gte?: InputMaybe<Scalars['Int']['input']>;
+  /** Checks if the value is defined. */
+  is_defined?: InputMaybe<Scalars['Boolean']['input']>;
   /** Checks if the value is lesser than the given input. */
   lt?: InputMaybe<Scalars['Int']['input']>;
   /** Checks if the value is lesser than or equal to the given input. */
@@ -394,7 +404,9 @@ export type Projects = Document & {
   /** Date the document was last modified */
   _updatedAt?: Maybe<Scalars['DateTime']['output']>;
   contentRaw?: Maybe<Scalars['JSON']['output']>;
+  githubSourceUrl?: Maybe<Scalars['String']['output']>;
   handle?: Maybe<Scalars['String']['output']>;
+  liveDemoUrl?: Maybe<Scalars['String']['output']>;
   orderRank?: Maybe<Scalars['String']['output']>;
   seoDesc?: Maybe<Scalars['String']['output']>;
   seoTitle?: Maybe<Scalars['String']['output']>;
@@ -410,7 +422,9 @@ export type ProjectsFilter = {
   _rev?: InputMaybe<StringFilter>;
   _type?: InputMaybe<StringFilter>;
   _updatedAt?: InputMaybe<DatetimeFilter>;
+  githubSourceUrl?: InputMaybe<StringFilter>;
   handle?: InputMaybe<StringFilter>;
+  liveDemoUrl?: InputMaybe<StringFilter>;
   orderRank?: InputMaybe<StringFilter>;
   seoDesc?: InputMaybe<StringFilter>;
   seoTitle?: InputMaybe<StringFilter>;
@@ -424,7 +438,9 @@ export type ProjectsSorting = {
   _rev?: InputMaybe<SortOrder>;
   _type?: InputMaybe<SortOrder>;
   _updatedAt?: InputMaybe<SortOrder>;
+  githubSourceUrl?: InputMaybe<SortOrder>;
   handle?: InputMaybe<SortOrder>;
+  liveDemoUrl?: InputMaybe<SortOrder>;
   orderRank?: InputMaybe<SortOrder>;
   seoDesc?: InputMaybe<SortOrder>;
   seoTitle?: InputMaybe<SortOrder>;
@@ -1043,6 +1059,8 @@ export type StringFilter = {
   /** Checks if the value is equal to the given input. */
   eq?: InputMaybe<Scalars['String']['input']>;
   in?: InputMaybe<Array<Scalars['String']['input']>>;
+  /** Checks if the value is defined. */
+  is_defined?: InputMaybe<Scalars['Boolean']['input']>;
   /** Checks if the value matches the given word/words. */
   matches?: InputMaybe<Scalars['String']['input']>;
   /** Checks if the value is not equal to the given input. */
@@ -1092,7 +1110,7 @@ export type GetProjectByHandleQueryVariables = Exact<{
 }>;
 
 
-export type GetProjectByHandleQuery = { __typename?: 'RootQuery', allProjects: Array<{ __typename?: 'Projects', title?: string | null, handle?: string | null, contentRaw?: any | null, seoTitle?: string | null, seoDesc?: string | null }> };
+export type GetProjectByHandleQuery = { __typename?: 'RootQuery', allProjects: Array<{ __typename?: 'Projects', title?: string | null, handle?: string | null, contentRaw?: any | null, seoTitle?: string | null, seoDesc?: string | null, githubSourceUrl?: string | null, liveDemoUrl?: string | null }> };
 
 
 export const GetAllProjectsDocument = gql`
@@ -1168,6 +1186,8 @@ export const GetProjectByHandleDocument = gql`
     contentRaw
     seoTitle
     seoDesc
+    githubSourceUrl
+    liveDemoUrl
   }
 }
     `;
