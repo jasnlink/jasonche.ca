@@ -41,7 +41,7 @@ export default function Home() {
                 <meta name="description" content={profileData?.seoDesc ?? ``} />
             </Head>
             <div className="h-full flex items-center justify-center">
-                <div className="mx-auto max-w-md bg-zinc-900 p-8 lg:p-12 rounded-sm">
+                <div className="mx-auto max-w-md bg-gradient-to-br from-zinc-800/60 to-zinc-900/80 p-8 lg:p-12 rounded-sm border border-zinc-600/20">
                     <div className="relative w-[100px] h-[100px]">
                         <Image src={profileData?.profileImage?.asset?.url ?? ``} alt={profileData?.profileImage?.alt ?? ``} height={100} width={100} className="rounded-full" onLoadingComplete={() => {setIsProfileImageLoading(false)}} />
                         {!!isProfileImageLoading && (
